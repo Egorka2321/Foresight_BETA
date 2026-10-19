@@ -3,8 +3,8 @@
 (function () {
   'use strict';
   var BLUES = ['#5AA9FF', '#8CC8FF', '#2F7BFF', '#BFE3FF', '#49D3F5', '#7FA8FF'];
-  var TRENDS = ['Старение', 'Автоматизация', 'Удалёнка', 'Отток молодёжи', 'Климат', 'Господдержка', 'Цены на сталь'];
-  var WORLDS = [['A', 'Новая сталь'], ['C', 'Перезапуск'], ['B', 'Тихий цех'], ['D', 'Последний гудок'], ['E', 'Инерция']];
+  var TRENDS = ['ИИ в госуслугах', 'Утечки данных', 'Госплатформа', 'Цифровые кадры', 'Отечественное ПО', 'Услуги 24/7', 'Бюджет на ИТ'];
+  var WORLDS = [['A', 'Государство-платформа'], ['C', 'Своими силами'], ['B', 'Цифровая крепость'], ['D', 'Назад к бумаге'], ['E', 'Инерция']];
 
   function Swarm(n, opts) {
     this.n = n || 220;
@@ -109,8 +109,8 @@
       ctx.fillStyle = 'rgba(190,227,255,' + (0.7 * a) + ')';
       ctx.font = '500 ' + Math.max(10, Math.round(W / 70)) + 'px Unbounded, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Внимание государства', mx, H * 0.04);
-      ctx.save(); ctx.translate(X0 + XW * 0.985, H * 0.51); ctx.rotate(Math.PI / 2); ctx.fillText('Судьба комбината', 0, 0); ctx.restore();
+      ctx.fillText('Доверие граждан', mx, H * 0.04);
+      ctx.save(); ctx.translate(X0 + XW * 0.985, H * 0.51); ctx.rotate(Math.PI / 2); ctx.fillText('Единая госплатформа или своё', 0, 0); ctx.restore();
     }
     // связи устойчивых решений
     if (step === 3) {
