@@ -161,13 +161,42 @@
     render();
   }
 
-  // переход между этапами: шторка с номером этапа, затем контент плавно проявляется
+  // переход между этапами: служебная записка — распоряжение министра с подписью и печатью
+  var ORDERS = {
+    intro: 'Открыть форсайт-сессию. Всем сотрудникам обратить внимание на экран.',
+    lobby: 'Всем участникам отсканировать QR-код и зарегистрироваться в системе.',
+    signals: 'Собрать сигналы будущего: каждому сотруднику — до двух, по одному в категорию.',
+    factors: 'Оценить силы, влияющие на министерство, по влиянию и неопределённости.',
+    teams: 'Сформировать пять штабов цифровизации и избрать в каждом капитана.',
+    world: 'Штабам изучить свой мир 2030 года и описать его последствия.',
+    pitch: 'Заслушать доклады штабов. Регламент — две минуты на штаб.',
+    map: 'Распределить цифровые решения между заместителями министра.',
+    overlay: 'Свести планы штабов и выявить решения, нужные во всех мирах.',
+    auction: 'Провести закрытый конкурс на финансирование решений. Остаток бюджета не переносится.',
+    reveal: 'Установить, какой мир наступил в 2030 году.',
+    shock: 'Довести до сведения: возможны непредвиденные обстоятельства.',
+    results: 'Подвести итоги работы штабов и объявить лучший.',
+    bet: 'Разрешить сотрудникам рискнуть личными баллами.',
+    final: 'Объявить итоговый рейтинг. Форсайт-сессию считать состоявшейся.',
+  };
+  function memoHtml(ph) {
+    var n = PHASES.indexOf(ph) + 1;
+    var stamp = '<svg class="memo-stamp" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="memo-ring" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs>' +
+      '<circle cx="100" cy="100" r="94" class="sl"/><circle cx="100" cy="100" r="58" class="sl thin"/>' +
+      '<text class="st"><textPath href="#memo-ring" startOffset="0" textLength="452" lengthAdjust="spacing">МИНИСТЕРСТВО ОБЩЕСТВЕННОГО БЛАГОПОЛУЧИЯ • СЕВЕРНАЯ ОБЛАСТЬ •</textPath></text>' +
+      '<text x="100" y="96" text-anchor="middle" class="sc">К</text><text x="100" y="117" text-anchor="middle" class="sc s">ИСПОЛНЕНИЮ</text></svg>';
+    var sign = '<svg class="memo-sign" viewBox="0 0 220 70" aria-hidden="true"><path d="M8,48 C22,10 34,8 36,30 C38,52 30,60 44,40 C56,22 60,30 62,44 C64,58 74,26 86,30 C98,34 88,54 104,46 C120,38 126,22 140,30 C152,37 146,50 160,44 C176,37 190,30 212,26"/></svg>';
+    return '<div class="memo"><div class="memo-head"><span class="memo-dep">' + esc(G.ministry) + '</span></div>' +
+      '<div class="memo-title"><b>Распоряжение</b><span>№ ' + String(n).padStart(2, '0') + ' · этап ' + n + ' из ' + PHASES.length + '</span></div>' +
+      '<p class="memo-name">' + esc(PHASE_NAME[ph]) + '</p>' +
+      '<p class="memo-text"><span>В целях цифровизации министерства</span>' + esc(ORDERS[ph] || PHASE_HINT[ph] || '') + '</p>' +
+      '<div class="memo-foot"><span class="memo-role">Министр</span>' + sign + stamp + '</div></div>';
+  }
   function phaseTransition(ph) {
     if (role === 'host' || role === 'curator') return;
     var fx = document.getElementById('phaseFx');
-    var i = PHASES.indexOf(ph);
     if (fx) {
-      fx.innerHTML = '<div class="fxin"><span class="fxnum">' + String(i + 1).padStart(2, '0') + '</span><span class="fxline"></span><span class="fxname">' + esc(PHASE_NAME[ph]) + '</span><span class="fxhint">' + esc(PHASE_HINT[ph] || '') + '</span></div>';
+      fx.innerHTML = memoHtml(ph);
       fx.classList.remove('run'); void fx.offsetWidth; fx.classList.add('run');
     }
     root.classList.remove('enter'); void root.offsetWidth; root.classList.add('enter');

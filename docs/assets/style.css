@@ -481,22 +481,41 @@ canvas.swarm { display: block; width: 100%; height: 100%; }
 .closing { margin: 8px 0 0; font: 500 16px/24px var(--display); color: #DDEBFF; text-align: center; }
 
 /* ---------- переходы между этапами ---------- */
-.phasefx { position: fixed; inset: 0; z-index: 80; pointer-events: none; display: grid; place-items: center; text-align: center; color: #fff;
-  background: radial-gradient(70% 60% at 50% 45%, #15407F 0%, #0A2348 55%, #061730 100%); opacity: 0; visibility: hidden; }
-.phasefx.run { visibility: visible; animation: fxwipe 1.6s cubic-bezier(.7, 0, .2, 1) forwards; }
-.phasefx .fxin { display: grid; gap: 10px; justify-items: center; padding: 24px; }
-.phasefx .fxnum { font: 700 clamp(64px, 18vw, 180px)/1 var(--display); background: linear-gradient(180deg, #fff, #7FB2FF); -webkit-background-clip: text; background-clip: text; color: transparent; opacity: 0; }
-.phasefx .fxname { font: 700 clamp(26px, 6vw, 64px)/1.1 var(--display); opacity: 0; }
-.phasefx .fxhint { font: 400 clamp(15px, 2.4vw, 26px)/1.4 var(--body); color: var(--lead); max-width: 30ch; opacity: 0; }
-.phasefx .fxline { width: 0; height: 3px; border-radius: 3px; background: linear-gradient(90deg, transparent, var(--cyan), transparent); }
-.phasefx.run .fxnum { animation: fxup .6s .25s cubic-bezier(.2, .7, .2, 1) forwards; }
-.phasefx.run .fxname { animation: fxup .6s .38s cubic-bezier(.2, .7, .2, 1) forwards; }
-.phasefx.run .fxhint { animation: fxup .6s .5s cubic-bezier(.2, .7, .2, 1) forwards; }
-.phasefx.run .fxline { animation: fxline .8s .3s ease-out forwards; }
-@keyframes fxwipe { 0% { opacity: 1; clip-path: circle(0% at 50% 100%); } 28% { opacity: 1; clip-path: circle(150% at 50% 100%); } 74% { opacity: 1; clip-path: circle(150% at 50% 100%); } 100% { opacity: 0; clip-path: circle(150% at 50% 100%); } }
-@keyframes fxup { from { opacity: 0; transform: translateY(24px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
-@keyframes fxline { to { width: min(420px, 70vw); } }
-#app.enter { animation: appin .7s 1.05s cubic-bezier(.2, .7, .2, 1) both; }
+.phasefx { position: fixed; inset: 0; z-index: 80; pointer-events: none; display: grid; place-items: center; padding: 20px;
+  background: radial-gradient(70% 60% at 50% 45%, rgba(21, 64, 127, .96) 0%, rgba(10, 35, 72, .97) 55%, rgba(6, 23, 48, .98) 100%); opacity: 0; visibility: hidden; }
+.phasefx.run { visibility: visible; animation: fxfade 2.6s ease forwards; }
+@keyframes fxfade { 0% { opacity: 0; } 8% { opacity: 1; } 86% { opacity: 1; } 100% { opacity: 0; } }
+/* лист служебной записки */
+.memo { position: relative; width: min(720px, 92vw); padding: clamp(20px, 4vw, 40px) clamp(20px, 4.4vw, 44px) clamp(18px, 3vw, 30px); color: #1E2A3B; text-align: left;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .5), rgba(255, 255, 255, 0) 30%), #F3EFE6; border-radius: 4px;
+  box-shadow: 0 40px 90px rgba(0, 6, 20, .55), 0 2px 0 rgba(255, 255, 255, .6) inset; transform-origin: 50% 100%; opacity: 0; }
+.memo::before { content: ''; position: absolute; inset: 0; border-radius: 4px; pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent 0 31px, rgba(30, 42, 59, .045) 31px 32px); }
+.phasefx.run .memo { animation: memoin .7s .12s cubic-bezier(.2, .8, .2, 1) forwards; }
+@keyframes memoin { from { opacity: 0; transform: translateY(60px) rotate(-3deg) scale(.96); } to { opacity: 1; transform: rotate(-1deg); } }
+.memo-head { padding-bottom: 12px; border-bottom: 1.5px solid #1E2A3B; text-align: center; }
+.memo-dep { font: 600 clamp(10px, 1.6vw, 13px)/1.35 var(--body); letter-spacing: .08em; text-transform: uppercase; color: #3A4658; }
+.memo-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 16px 0 4px; }
+.memo-title b { font: 700 clamp(18px, 3vw, 26px)/1.1 var(--display); letter-spacing: .02em; text-transform: uppercase; color: #1E2A3B; }
+.memo-title span { font: 400 clamp(12px, 1.8vw, 14px) var(--body); color: #5B6678; white-space: nowrap; }
+.memo-name { margin: 0 0 14px; font: 600 clamp(13px, 2vw, 15px) var(--body); color: #2F5BB7; }
+.memo-text { margin: 0; font: 400 clamp(17px, 2.8vw, 24px)/1.4 var(--body); color: #1E2A3B; min-height: 3.6em; }
+.memo-text span { display: block; margin-bottom: 6px; font-size: .62em; letter-spacing: .03em; color: #5B6678; }
+.memo-foot { position: relative; display: flex; align-items: flex-end; gap: 16px; margin-top: clamp(16px, 3vw, 26px); min-height: 70px; }
+.memo-role { font: 600 clamp(13px, 2vw, 16px) var(--body); color: #1E2A3B; padding-bottom: 10px; }
+.memo-sign { width: clamp(130px, 22vw, 200px); height: auto; }
+.memo-sign path { fill: none; stroke: #23408F; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 420; stroke-dashoffset: 420; }
+.phasefx.run .memo-sign path { animation: sign .6s .75s ease-in-out forwards; }
+@keyframes sign { to { stroke-dashoffset: 0; } }
+.memo-stamp { position: absolute; right: -6px; bottom: -12px; width: clamp(104px, 18vw, 150px); height: auto; opacity: 0; mix-blend-mode: multiply; }
+.memo-stamp .sl { fill: none; stroke: #3B47B5; stroke-width: 5; }
+.memo-stamp .sl.thin { stroke-width: 2.5; }
+.memo-stamp .st { font: 700 11px var(--body); fill: #3B47B5; }
+.memo-stamp .sc { font: 700 20px var(--display); fill: #3B47B5; }
+.memo-stamp .sc.s { font: 700 12.5px var(--body); letter-spacing: .04em; }
+.phasefx.run .memo-stamp { animation: stamp .4s 1.35s cubic-bezier(.3, 1.6, .5, 1) forwards; }
+@keyframes stamp { from { opacity: 0; transform: scale(1.8) rotate(-24deg); } to { opacity: .85; transform: scale(1) rotate(-14deg); } }
+#app.enter { animation: appin .7s 2.15s cubic-bezier(.2, .7, .2, 1) both; }
 @keyframes appin { from { opacity: 0; transform: translateY(16px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
 body[data-role="screen"] #app.enter { animation-name: appfade; }
 @keyframes appfade { from { opacity: 0; } to { opacity: 1; } }
