@@ -320,7 +320,7 @@ canvas.swarm { display: block; width: 100%; height: 100%; }
 .effect.neg { color: #FFB3A7; } .effect.pos { color: #A9F0C8; }
 .projects { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .proj { display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 12px 14px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); }
-.proj h3 { margin: 6px 0 2px; font-size: 15px; line-height: 20px; font-weight: 600; color: #fff; }
+.proj h3 { margin: 0 0 2px; font-size: 15px; line-height: 20px; font-weight: 600; color: #fff; }
 .proj p { margin: 0; font-size: 14px; line-height: 19px; color: var(--muted); }
 .proj.on { border-color: rgba(110, 227, 164, .5); background: rgba(9, 32, 68, .6); }
 .proj .state { flex: none; }
@@ -352,7 +352,7 @@ canvas.swarm { display: block; width: 100%; height: 100%; }
 .clock { flex: none; font: 700 16px var(--display); color: var(--sky-2); }
 .clock.hurry { color: var(--neg); }
 .timer { position: relative; display: inline-grid; place-items: center; flex: none; width: var(--ts); height: var(--ts); }
-.timer svg { display: block; }
+.timer svg { display: block; overflow: visible; }
 .timer .tr-bg { fill: none; stroke: rgba(120, 175, 255, .25); }
 .timer .tr-fg { fill: none; stroke: var(--sky); stroke-linecap: round; filter: drop-shadow(0 0 6px rgba(90, 169, 255, .6)); }
 .timer .tnum { position: absolute; font: 700 16px var(--display); color: #fff; }
@@ -617,9 +617,9 @@ body[data-role="screen"] #app.enter { animation-name: appfade; }
 .mem.lead .av { background: color-mix(in srgb, var(--c) 25%, transparent); }
 .mem.lead .nm { font-weight: 600; color: #fff; }
 .mem.lead .vc { font-size: 13px; color: var(--gold); }
-.mem.slot { border: 1.5px dashed color-mix(in srgb, var(--c) 45%, transparent); }
-.mem.slot .av { background: none; border: 1.5px dashed color-mix(in srgb, var(--c) 60%, transparent); color: var(--c); font-size: 20px; }
-.mem.slot .nm { font-size: 16px; color: color-mix(in srgb, var(--c) 45%, #fff); }
+.mem.free { padding: 6px 10px; border: 1.5px dashed color-mix(in srgb, var(--c) 40%, transparent); }
+.mem.free .av { width: 28px; height: 28px; background: none; border: 1.5px dashed color-mix(in srgb, var(--c) 60%, transparent); color: var(--c); font-size: 17px; }
+.mem.free .nm { font-size: 15px; color: color-mix(in srgb, var(--c) 45%, #fff); }
 .vprog { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; font-size: 13px; color: var(--muted); }
 .vprog .bar { height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--c) 20%, transparent); overflow: hidden; }
 .vprog .bar i { display: block; height: 100%; border-radius: 3px; background: var(--c); }

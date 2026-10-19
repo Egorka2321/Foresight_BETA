@@ -804,7 +804,7 @@
     } else {
       html += '<h2 class="ph2">Цифровые решения</h2><ul class="projects">' + PK.map(function (p) {
         var pr = proj(p), on = !!t.placements[p];
-        return '<li class="proj' + (on ? ' on' : '') + '"><div><span class="tag">' + esc(block(pr.block).name) + '</span><h3>' + esc(pr.name) + '</h3><p>' + esc(pr.text) + '</p></div>' +
+        return '<li class="proj' + (on ? ' on' : '') + '"><div><h3>' + esc(pr.name) + '</h3><p>' + esc(pr.text) + '</p></div>' +
           (on ? '<span class="state">' + check('#6EE3A4') + '</span>' : cap ? '<button class="btn small ghost" data-act="pick" data-project="' + p + '"' + (full || ui.busy ? ' disabled' : '') + '>' + (full ? 'Лимит' : 'Внедрить') + '</button>' : '') + '</li>';
       }).join('') + '</ul>';
       html += field(t, 'rationale', 'Почему именно эти решения?', 'Одно-два предложения: как они помогут министерству в вашем мире', 3);
@@ -1128,10 +1128,11 @@
           var isL = x.id === lead, n = tally[x.id] || 0;
           return '<div class="mem' + (isL ? ' lead' : '') + '"><span class="av">' + esc(initials(x.name)) + '</span><span class="mn">' + (isL ? '<span class="nm">' + crown() + esc(x.name) + '</span><span class="vc">' + n + ' ' + plural(n, 'голос', 'голоса', 'голосов') + '</span>' : '<span class="nm">' + esc(x.name) + '</span>') + '</span>' + (!isL && n ? '<span class="vn">' + n + ' ' + plural(n, 'голос', 'голоса', 'голосов') + '</span>' : '') + '</div>';
         }).join('');
-        for (var k = m.length; k < S.teamSize; k++) rows += '<div class="mem slot"><span class="av">+</span><span class="nm">Свободное место</span></div>';
+        var freeN = Math.max(0, S.teamSize - m.length);
+        if (freeN) rows += '<div class="mem free"><span class="av">+</span><span class="nm">' + (m.length ? 'Ещё ' : '') + freeN + ' ' + plural(freeN, 'свободное место', 'свободных места', 'свободных мест') + '</span></div>';
         var pct = m.length ? Math.round(voted / m.length * 100) : 0;
         return '<section class="tcol" style="' + teamStyle(t.id) + '"><div class="th">' + chip(t.id, 52) + '<span><b>' + tLabel(t.id) + '</b><span>' + m.length + ' из ' + S.teamSize + '</span></span></div>' + rows +
-          '<div class="vprog"><span>Проголосовали ' + voted + ' из ' + m.length + '</span><span class="bar"><i style="width:' + pct + '%"></i></span></div>' +
+          (m.length ? '<div class="vprog"><span>Проголосовали ' + voted + ' из ' + m.length + '</span><span class="bar"><i style="width:' + pct + '%"></i></span></div>' : '') +
           '<div class="wslot">' + (t.world ? '<b style="' + worldStyle(t.world) + '">' + t.world + '</b><span>' + esc(world(t.world).name) + '</span>' : '<b>?</b><span>мир 2030 года</span>') + '</div></section>';
       }).join('') + '</div>';
   }
@@ -1178,16 +1179,16 @@
     }).join('') + '</div>';
     // министр и шина
     html += '<div class="minister"><b>' + esc(G.minister.name) + '</b><span>' + esc(G.minister.text) + '</span></div>' +
-      '<i class="ln" style="left:799px;top:200px;width:2px;height:26px"></i><i class="ln" style="left:' + (X0 + 138) + 'px;top:225px;width:' + (STEP * 4 + 2) + 'px;height:2px"></i>';
+      '<i class="ln" style="left:799px;top:199px;width:2px;height:28px"></i><i class="ln" style="left:' + (X0 + 137) + 'px;top:225px;width:' + (STEP * 4 + 2) + 'px;height:2px"></i>';
     B.forEach(function (b, i) {
       var L = X0 + STEP * i, bl = block(b), n = bl.depts.length;
       var hasCons = by && by[b].some(function (x) { return isCons(x.project); });
       html += '<div class="bframe' + (hasCons ? ' cons' : '') + '" style="left:' + L + 'px"></div>' +
-        '<i class="ln" style="left:' + (L + 137) + 'px;top:226px;width:2px;height:42px"></i>' +
+        '<i class="ln" style="left:' + (L + 137) + 'px;top:225px;width:2px;height:44px"></i>' +
         '<div class="deputy" style="left:' + (L + 16) + 'px"><span>' + esc(bl.deputy) + '</span><b>' + esc(bl.name) + '</b></div>' +
-        '<i class="ln" style="left:' + (L + 39) + 'px;top:332px;width:2px;height:' + (40 + 48 * (n - 1) - 3) + 'px"></i>';
+        '<i class="ln" style="left:' + (L + 39) + 'px;top:331px;width:2px;height:' + (42 + 48 * (n - 1)) + 'px"></i>';
       bl.depts.forEach(function (d, j) {
-        html += '<i class="ln" style="left:' + (L + 40) + 'px;top:' + (371 + 48 * j) + 'px;width:24px;height:2px"></i><div class="dept" style="left:' + (L + 64) + 'px;top:' + (352 + 48 * j) + 'px">' + esc(d) + '</div>';
+        html += '<i class="ln" style="left:' + (L + 39) + 'px;top:' + (371 + 48 * j) + 'px;width:26px;height:2px"></i><div class="dept" style="left:' + (L + 64) + 'px;top:' + (352 + 48 * j) + 'px">' + esc(d) + '</div>';
       });
       var inner = '';
       if (mode === 'overlay') {
